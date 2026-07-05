@@ -97,14 +97,9 @@ document.addEventListener("keydown", (e) => {
 document.addEventListener("keydown", (e) => {
   if (lightbox.classList.contains("is-open")) {
     for (let i = 0; i < galleryItems.length; i++) {
-      if (e.code === "ArrowRight") {
-        if (lightboxImg.src === galleryItems[i].original) {
-          lightboxImg.src = galleryItems[i + 1].original;
-        }
-      }
       if (e.code === "ArrowLeft") {
         lightboxImg.src === galleryItems[i].original
-          ? (lightboxImg.src = galleryItems[i - 1].original)
+          ? lightboxImg.src = galleryItems[i + 1].original
           : false;
       }
     }
