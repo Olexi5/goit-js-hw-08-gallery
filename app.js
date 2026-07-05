@@ -65,10 +65,48 @@ const galleryItems = [
 ];
 const list = document.querySelector(".gallery");
 const lightboxImg = document.querySelector(".lightbox__image");
-const lightbox = document.querySelector(".lightbox")
+const lightbox = document.querySelector(".lightbox");
 list.addEventListener("click", (e) => {
-    e.preventDefault()
-    console.log(e.target.src)
-    lightbox.classList.add("is-open")
-  lightboxImg.src = e.target.src;
+  e.preventDefault();
+  lightbox.classList.toggle("is-open");
+  for (let item of galleryItems) {
+    lightboxImg.alt = e.target.alt;
+    lightboxImg.alt === item.description
+      ? (lightboxImg.src = item.original)
+      : false;
+  }
+});
+const close = document.querySelector(".lightbox__button");
+close.addEventListener("click", () => {
+  lightbox.classList.toggle("is-open");
+  lightboxImg.src = "";
+});
+const overlay = document.querySelector(".lightbox__overlay");
+overlay.addEventListener("click", () => {
+  lightbox.classList.toggle("is-open");
+  lightboxImg.src = "";
+});
+document.addEventListener("keydown", (e) => {
+  if (lightbox.classList.contains("is-open")) {
+    if (e.code === "Escape") {
+      lightbox.classList.toggle("is-open");
+      lightboxImg.src = "";
+    }
+  }
+});
+document.addEventListener("keydown", (e) => {
+  if (lightbox.classList.contains("is-open")) {
+    for (let i = 0; i < galleryItems.length; i++) {
+      if (e.code === "ArrowRight") {
+        if (lightboxImg.src === galleryItems[i].original) {
+          lightboxImg.src = galleryItems[i + 1].original;
+        }
+      }
+      if (e.code === "ArrowLeft") {
+        lightboxImg.src === galleryItems[i].original
+          ? (lightboxImg.src = galleryItems[i - 1].original)
+          : false;
+      }
+    }
+  }
 });
