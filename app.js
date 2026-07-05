@@ -66,14 +66,16 @@ const galleryItems = [
 const list = document.querySelector(".gallery");
 const lightboxImg = document.querySelector(".lightbox__image");
 const lightbox = document.querySelector(".lightbox");
+let index = 0;
 list.addEventListener("click", (e) => {
   e.preventDefault();
   lightbox.classList.toggle("is-open");
   for (let item of galleryItems) {
     lightboxImg.alt = e.target.alt;
-    lightboxImg.alt === item.description
-      ? (lightboxImg.src = item.original)
-      : false;
+    if(lightboxImg.alt === item.description){
+      lightboxImg.src = item.original
+      index = galleryItems.indexOf(item)
+    }
   }
 });
 const close = document.querySelector(".lightbox__button");
@@ -96,12 +98,25 @@ document.addEventListener("keydown", (e) => {
 });
 document.addEventListener("keydown", (e) => {
   if (lightbox.classList.contains("is-open")) {
-    for (let i = 0; i < galleryItems.length; i++) {
-      if (e.code === "ArrowLeft") {
-        lightboxImg.src === galleryItems[i].original
-          ? lightboxImg.src = galleryItems[i + 1].original
-          : false;
-      }
+    if (e.code === "ArrowRight") {
+      next()
+    }
+    if (e.code === "ArrowLeft") {
+      prev()
     }
   }
 });
+function next() {
+  index++;
+  if (index >= galleryItems.length) {
+    index = 0;
+  }
+  lightboxImg.src = galleryItems[index].original;
+}
+function prev(){
+  index--
+  if(index<0){
+    index = galleryItems.length-1
+  }
+  lightboxImg.src = galleryItems[index].original;
+}
